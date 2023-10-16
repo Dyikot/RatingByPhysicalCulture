@@ -1,0 +1,606 @@
+﻿<Window
+    x:Class="RatingByPhysicalCulture.Windows.StartWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:RatingByPhysicalCulture.Windows"
+    xmlns:system="cls-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    Title="Рейтинг по &quot;Физической культуре&quot;"
+    Height="335"
+    Width="600"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    Background="WhiteSmoke"
+    WindowStyle="SingleBorderWindow"
+    Icon="/Resources/Images/projectIcon.ico"
+    Closed="OnWindowClosed">
+    <Window.Resources>
+        <!--Иконки для кнопок-->
+        <BitmapImage
+            x:Key="CreateNewProjectIcon"
+            UriSource="..\Resources\Images\createNewProjectIcon.png"/>
+        <BitmapImage
+            x:Key="OpenProjectIcon"
+            UriSource="..\Resources\Images\openProjectIcon.png"/>
+        <BitmapImage
+            x:Key="OpenFileDialogIcon"
+            UriSource="..\Resources\Images\openFileDialogIcon.png"/>
+
+        <Style TargetType="TabControl">
+            <Setter
+                Property="Background"
+                Value="WhiteSmoke"/>
+            <Setter
+                Property="BorderThickness"
+                Value="0"/>
+        </Style>
+
+    </Window.Resources>
+
+    <TabControl 
+        Name="_tabControl">
+        <TabControl.ItemContainerStyle>
+            <Style 
+                TargetType="{x:Type TabItem}">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed"/>
+            </Style>
+        </TabControl.ItemContainerStyle>
+
+        <TabItem 
+            Name="startMenu">
+            <TabItem.Resources>
+                <!--Стиль заголовка-->
+                <Style
+                    x:Key="MainTitle"
+                    TargetType="TextBlock">
+                    <Setter 
+                        Property="Text"
+                        Value="Добро пожаловать!"/>
+                    <Setter
+                        Property="FontSize"
+                        Value="30"/>
+                    <Setter
+                        Property="Margin"
+                        Value="15 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center"/>
+                    <Setter
+                        Property="HorizontalAlignment"
+                        Value="Left"/>
+                </Style>
+
+                <!--Стиль элементов списка "Недавно открытых проектов"-->
+                <Style 
+                    TargetType="ListBoxItem">
+                    <Setter
+                        Property="Height" 
+                        Value="60"/>
+                    <EventSetter
+                        Event="MouseDoubleClick"
+                        Handler="OnProjectListDoubleClick"/>
+                </Style>
+
+                <!--Стиль списка "Недавно открытых проектов"-->
+                <Style
+                    x:Key="RecentProjectTitle"
+                    TargetType="TextBlock">
+                    <Setter
+                        Property="Grid.Row"
+                        Value="0"/>
+                    <Setter
+                        Property="Text"
+                        Value="Открыть недавние"/>
+                    <Setter
+                        Property="FontSize"
+                        Value="20"/>
+                    <Setter 
+                       Property="Margin" 
+                       Value="15 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center"/>
+                    <Setter
+                        Property="HorizontalAlignment" 
+                        Value="Left"/>
+                </Style>
+
+                <Style
+                    x:Key="RecentProjectList"
+                    TargetType="ListBox">
+                    <Setter
+                        Property="Grid.Row"
+                        Value="1"/>
+                    <Setter
+                        Property="SelectionMode"
+                        Value="Single"/>
+                    <Setter
+                        Property="Background"
+                        Value="WhiteSmoke"/>
+                    <Setter
+                        Property="BorderThickness"
+                        Value="0"/>
+                    <Setter
+                        Property="VerticalContentAlignment"
+                        Value="Stretch"/>
+                    <Setter
+                        Property="HorizontalContentAlignment"
+                        Value="Stretch"/>
+                    <Setter
+                        Property="VirtualizingPanel.IsVirtualizing"
+                        Value="True"/>
+                    <Setter
+                        Property="VirtualizingPanel.VirtualizationMode"
+                        Value="Recycling"/>
+                    <Setter
+                        Property="VirtualizingPanel.CacheLength" 
+                        Value="1"/>
+                    <Setter
+                        Property="VirtualizingPanel.CacheLengthUnit"
+                        Value="Page"/>
+                    <Setter
+                        Property="VirtualizingPanel.ScrollUnit"
+                        Value="Pixel"/>
+                    <Setter
+                        Property="ScrollViewer.HorizontalScrollBarVisibility"
+                        Value="Disabled"/>
+                    <Setter
+                        Property="ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <DataTemplate.Resources>
+                                    <Style
+                                        x:Key="RecentProjectListItem_ProjectName"
+                                        TargetType="TextBlock">
+                                        <Setter
+                                            Property="Grid.Column"
+                                            Value="0"/>
+                                        <Setter
+                                            Property="Grid.Row"
+                                            Value="0"/>
+                                        <Setter
+                                            Property="FontSize" 
+                                            Value="15"/>
+                                        <Setter
+                                            Property="Margin"
+                                            Value="5 0 0 0"/>
+                                    </Style>
+
+                                    <Style 
+                                        x:Key="RecentProjectListItem_ProjectTimeOpened"
+                                        TargetType="TextBlock">
+                                        <Setter
+                                            Property="Grid.Column"
+                                            Value="1"/>
+                                        <Setter
+                                            Property="Grid.Row"
+                                            Value="0"/>
+                                        <Setter
+                                            Property="FontSize"
+                                            Value="15"/>
+                                        <Setter
+                                            Property="Margin"
+                                            Value="0 0 5 0"/>
+                                    </Style>
+
+                                    <Style 
+                                        x:Key="RecentProjectListItem_ProjectPath"
+                                        TargetType="TextBlock">
+                                        <Setter
+                                            Property="Grid.Row"
+                                            Value="1"/>
+                                        <Setter
+                                            Property="Grid.Column"
+                                            Value="0"/>
+                                        <Setter
+                                            Property="Grid.ColumnSpan"
+                                            Value="2"/>
+                                        <Setter
+                                            Property="FontSize"
+                                            Value="15"/>
+                                        <Setter
+                                            Property="Margin"
+                                            Value="5 0 0 0"/>
+                                        <Setter
+                                            Property="ToolTipService.ToolTip"
+                                            Value="{Binding Path}"/>
+                                    </Style>
+                                </DataTemplate.Resources>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.69*"/>
+                                        <ColumnDefinition Width="0.31*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        Text="{Binding Name}"
+                                        Style="{StaticResource RecentProjectListItem_ProjectName}"/>
+                                    <TextBlock
+                                        Text="{Binding TimeOpened}"
+                                        Style="{StaticResource RecentProjectListItem_ProjectTimeOpened}"/>
+                                    <TextBlock
+                                        Text="{Binding Path}"
+                                        Style="{StaticResource RecentProjectListItem_ProjectPath}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <!--Стили кнопок-->
+                <Style
+                    x:Key="CreateNewPorjectButton"
+                    TargetType="Button">
+                    <EventSetter
+                        Event="Click"
+                        Handler="OnCreateNewProjectButtonClick"/>
+                    <Setter
+                        Property="Width"
+                        Value="168"/>
+                    <Setter
+                        Property="Height"
+                        Value="45"/>
+                    <Setter
+                        Property="Canvas.Left"
+                        Value="6"/>
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="37"/>
+                    <Setter
+                        Property="Content">
+                        <Setter.Value>
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{StaticResource CreateNewProjectIcon}"/>
+                                <TextBlock
+                                    Text="Создать новый проект"  
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"
+                                    Margin="2 0 0 0"
+                                    Width="117"/>
+                            </StackPanel>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <Style
+                    x:Key="OpenProjectButton"
+                    TargetType="Button">
+                    <EventSetter
+                        Event="Click"
+                        Handler="OnOpenProjectButtonClick"/>
+                    <Setter
+                        Property="Width"
+                        Value="168"/>
+                    <Setter
+                        Property="Height" 
+                        Value="45"/>
+                    <Setter 
+                       Property="Canvas.Left"
+                        Value="6"/>
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="87"/>
+                    <Setter
+                        Property="Content">
+                        <Setter.Value>
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{StaticResource OpenProjectIcon}"/>
+                                <TextBlock
+                                    Text="Открыть проект"
+                                    VerticalAlignment="Center"
+                                    Margin="2 0 0 0"/>
+                            </StackPanel>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabItem.Resources>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="0.2*"/>
+                    <RowDefinition
+                        Height="0.8*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Style="{StaticResource MainTitle}"/>
+                <Grid 
+                    Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition 
+                            Width="0.70*"/>
+                        <ColumnDefinition
+                            Width="0.30*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Разметка для списка "Недавно открытых проектов"-->
+                    <Grid 
+                        Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition 
+                                Height="0.15*"/>
+                            <RowDefinition 
+                                Height="0.85*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Style="{StaticResource RecentProjectTitle}"/>
+                        <ListBox
+                            Name="_recentProjectList"
+                            Style="{StaticResource RecentProjectList}"/>
+                    </Grid>
+
+                    <!--Разметка для кнопок-->
+                    <Canvas 
+                        Grid.Column="1">
+                        <Button
+                            Name="createNewProjectButton"
+                            Style="{StaticResource CreateNewPorjectButton}"/>
+                        <Button
+                            Name="openProjectButton"
+                            Style="{StaticResource OpenProjectButton}"/>
+                    </Canvas>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem 
+            Name="createNewProjectMenu">
+            <TabItem.Resources>
+                <Style
+                    x:Key="TabTitle"
+                    TargetType="TextBlock">
+                    <Setter
+                        Property="Grid.Row"
+                        Value="0"/>
+                    <Setter
+                        Property="Text"
+                        Value="Настройте ваш проект"/>
+                    <Setter
+                        Property="FontSize"
+                        Value="25"/>
+                    <Setter
+                        Property="Margin"
+                        Value="10 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center"/>
+                </Style>
+
+                <Style
+                    x:Key="ProjectNameTitle"
+                    TargetType="TextBlock">
+                    <Setter
+                        Property="Grid.Row"
+                        Value="1"/>
+                    <Setter
+                        Property="Text"
+                        Value="Название проекта"/>
+                    <Setter
+                        Property="FontSize"
+                        Value="15"/>
+                    <Setter
+                        Property="Margin"
+                        Value="10 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center"/>
+                </Style>
+
+                <Style
+                    x:Key="ProjectNameValue"
+                    TargetType="TextBox">
+                    <Setter
+                        Property="Grid.Row"
+                        Value="2"/>
+                    <Setter 
+                       Property="Text" 
+                       Value="Project"/>
+                    <Setter
+                        Property="FontSize"
+                        Value="15"/>
+                    <Setter
+                        Property="Margin"
+                        Value="10 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment" 
+                       Value="Center"/>
+                    <Setter 
+                       Property="HorizontalAlignment" 
+                       Value="Left"/>
+                    <Setter 
+                       Property="Width" 
+                       Value="400"/>
+                    <EventSetter 
+                       Event="Loaded" 
+                       Handler="OnProjectNameTextBoxLoaded"/>
+                </Style>
+
+                <Style 
+                   x:Key="ProjectLocationTitle" 
+                   TargetType="TextBlock">
+                    <Setter
+                        Property="Grid.Row" 
+                       Value="3"/>
+                    <Setter 
+                       Property="Text"
+                        Value="Расположение проекта"/>
+                    <Setter 
+                       Property="FontSize" 
+                       Value="15"/>
+                    <Setter 
+                       Property="Margin"
+                       Value="10 0 0 0"/>
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center"/>
+                </Style>
+
+                <Style 
+                    x:Key="ProjectLocationValue"
+                    TargetType="TextBox">
+                    <Setter
+                        Property="FontSize"
+                        Value="15"/>
+                    <Setter
+                        Property="Margin"
+                        Value="10 0 0 0"/>
+                    <Setter
+                        Property="Width"
+                        Value="400"/>
+                    <Setter 
+                       Property="Height"
+                        Value="22"/>
+                    <Setter 
+                       Property="Canvas.Top" 
+                       Value="4"/>
+                </Style>
+
+                <Style
+                    x:Key="ProjectLocationButton"
+                    TargetType="Button">
+                    <Setter
+                        Property="Margin"
+                        Value="0 0 0 10"/>
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="4"/>
+                    <Setter
+                        Property="Canvas.Left" 
+                        Value="415"/>
+                    <Setter 
+                       Property="Width" 
+                       Value="26"/>
+                    <Setter 
+                        Property="Height" 
+                        Value="22"/>
+                    <Setter 
+                        Property="Content">
+                        <Setter.Value>
+                            <Image 
+                                Width="16"                                   
+                                Height="16"
+                                Source="{StaticResource OpenFileDialogIcon}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <EventSetter 
+                        Event="Click" 
+                        Handler="OnProjectLocationButtonClick"/>
+                </Style>
+
+                <!--Стили кнопок-->
+                <Style 
+                    x:Key="NavigationButton" 
+                    TargetType="Button">
+                    <Setter 
+                        Property="FontSize" 
+                        Value="14"/>
+                    <Setter 
+                        Property="Width"
+                        Value="100"/>
+                    <Setter 
+                        Property="Height"
+                        Value="30"/>
+                </Style>
+
+                <Style 
+                    x:Key="BackButton" 
+                    TargetType="Button"
+                    BasedOn="{StaticResource NavigationButton}">
+                    <Setter 
+                        Property="Content" 
+                        Value="Назад"/>
+                    <Setter 
+                        Property="Canvas.Left" 
+                        Value="349"/>
+                    <Setter 
+                        Property="Canvas.Top" 
+                        Value="17"/>
+                    <EventSetter 
+                        Event="Click" 
+                        Handler="OnBackButtonClick"/>
+                </Style>
+
+                <Style 
+                    x:Key="CreateButton" 
+                    TargetType="Button"
+                    BasedOn="{StaticResource NavigationButton}">
+                    <Setter 
+                        Property="Content" 
+                        Value="Создать"/>
+                    <Setter 
+                        Property="Canvas.Left" 
+                        Value="454"/>
+                    <Setter 
+                        Property="Canvas.Top" 
+                        Value="17"/>
+                    <EventSetter 
+                        Event="Click" 
+                        Handler="OnCreateButtonClick"/>
+                </Style>
+            </TabItem.Resources>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="0.2*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.1*"/>
+                    <RowDefinition 
+                        Height="0.2*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Style="{StaticResource TabTitle}"/>
+                <TextBlock 
+                    Style="{StaticResource ProjectNameTitle}"/>
+                <TextBox 
+                    Name="_projectName" 
+                    Style="{StaticResource ProjectNameValue}"/>
+                <TextBlock 
+                    Style="{StaticResource ProjectLocationTitle}"/>
+                <Canvas 
+                    Grid.Row="4">
+                    <TextBox 
+                        Name="_projectPath"
+                        Style="{StaticResource ProjectLocationValue}"
+                        Initialized="OnProjectPathInitialized"/>
+                    <Button 
+                        Style="{StaticResource ProjectLocationButton}"/>
+                </Canvas>
+                <Canvas 
+                    Grid.Row="7">
+                    <Button 
+                        Name="_backButton" 
+                        Style="{StaticResource BackButton}"/>
+                    <Button 
+                        Style="{StaticResource CreateButton}"/>
+                </Canvas>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

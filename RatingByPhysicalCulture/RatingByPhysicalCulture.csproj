@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\projectIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\createNewProjectIcon.png" />
+    <None Remove="Resources\Images\openFileDialogIcon.png" />
+    <None Remove="Resources\Images\openProjectIcon.png" />
+    <None Remove="Resources\Images\projectHelp.ico" />
+    <None Remove="Resources\Images\projectIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net6.0-windows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\createNewProjectIcon.png" />
+    <Resource Include="Resources\Images\openFileDialogIcon.png" />
+    <Resource Include="Resources\Images\openProjectIcon.png" />
+    <Resource Include="Resources\Images\projectIcon.ico" />
+    <Resource Include="Resources\Images\projectHelp.ico" />
+  </ItemGroup>
+
+</Project>
