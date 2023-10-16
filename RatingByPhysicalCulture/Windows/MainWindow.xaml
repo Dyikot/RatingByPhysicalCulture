@@ -20,19 +20,41 @@
     Icon="/Resources/Images/projectIcon.ico">
     <Window.Resources>
         <!--Стили элементов меню-->
-        <Style x:Key="Menu" TargetType="Menu">
-            <Setter Property="Grid.Row" Value="0"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Background" Value="WhiteSmoke"/>
+        <Style 
+            x:Key="Menu" 
+            TargetType="Menu">
+            
+            <Setter 
+                Property="Grid.Row" 
+                Value="0"/>
+            <Setter 
+                Property="FontSize" 
+                Value="16"/>
+            <Setter 
+                Property="Background" 
+                Value="WhiteSmoke"/>
         </Style>
         
         <!--Стили элементов прокрутки-->
-        <Style x:Key="HeaderScrollViewer" TargetType="ScrollViewer">
-            <Setter Property="Grid.Row" Value="0"/>
-            <Setter Property="Background" Value="WhiteSmoke"/>
-            <Setter Property="Margin" Value="0 0 17 0"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Style 
+            x:Key="HeaderScrollViewer" 
+            TargetType="ScrollViewer">
+            
+            <Setter 
+                Property="Grid.Row" 
+                Value="0"/>
+            <Setter 
+                Property="Background" 
+                Value="WhiteSmoke"/>
+            <Setter 
+                Property="Margin" 
+                Value="0 0 17 0"/>
+            <Setter 
+                Property="VerticalScrollBarVisibility" 
+                Value="Disabled"/>
+            <Setter 
+                Property="HorizontalScrollBarVisibility" 
+                Value="Hidden"/>
         </Style>
         
         <!--Стили контекстных меню-->
