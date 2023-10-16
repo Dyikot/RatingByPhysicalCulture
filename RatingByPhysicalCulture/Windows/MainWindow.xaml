@@ -20,41 +20,19 @@
     Icon="/Resources/Images/projectIcon.ico">
     <Window.Resources>
         <!--Стили элементов меню-->
-        <Style 
-            x:Key="Menu" 
-            TargetType="Menu">
-            
-            <Setter 
-                Property="Grid.Row" 
-                Value="0"/>
-            <Setter 
-                Property="FontSize" 
-                Value="16"/>
-            <Setter 
-                Property="Background" 
-                Value="WhiteSmoke"/>
+        <Style x:Key="Menu" TargetType="Menu">
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
         </Style>
         
         <!--Стили элементов прокрутки-->
-        <Style 
-            x:Key="HeaderScrollViewer" 
-            TargetType="ScrollViewer">
-            
-            <Setter 
-                Property="Grid.Row" 
-                Value="0"/>
-            <Setter 
-                Property="Background" 
-                Value="WhiteSmoke"/>
-            <Setter 
-                Property="Margin" 
-                Value="0 0 17 0"/>
-            <Setter 
-                Property="VerticalScrollBarVisibility" 
-                Value="Disabled"/>
-            <Setter 
-                Property="HorizontalScrollBarVisibility" 
-                Value="Hidden"/>
+        <Style x:Key="HeaderScrollViewer" TargetType="ScrollViewer">
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Margin" Value="0 0 17 0"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
         </Style>
         
         <!--Стили контекстных меню-->
@@ -90,21 +68,24 @@
             </Style.Setters>
         </Style>
 
-        <Style x:Key="MainColumnFio"
-               TargetType="Button"
-               BasedOn="{StaticResource MainColumns}">
+        <Style 
+            x:Key="MainColumnFio"
+            TargetType="Button"
+            BasedOn="{StaticResource MainColumns}">
             <Setter Property="Content" Value="ФИО"/>
         </Style>
 
-        <Style x:Key="MainColumnGroup"
-               TargetType="Button"
-               BasedOn="{StaticResource MainColumns}">
+        <Style 
+            x:Key="MainColumnGroup"
+            TargetType="Button"
+            BasedOn="{StaticResource MainColumns}">
             <Setter Property="Content" Value="Учебная&#x0a;группа"/>
         </Style>
 
-        <Style x:Key="MainColumnRating"
-               TargetType="Button" 
-               BasedOn="{StaticResource MainColumns}">
+        <Style 
+            x:Key="MainColumnRating"
+            TargetType="Button" 
+            BasedOn="{StaticResource MainColumns}">
             <Setter Property="Content" Value="Место"/>
             <Setter Property="BorderThickness" Value="1 2 2 1"/>
         </Style>
@@ -201,156 +182,119 @@
             <Setter Property="BorderBrush" Value="gray"/>
         </Style>
 
-        <Style x:Key="DataGridResultCell"
-               BasedOn="{StaticResource {x:Type DataGridCell}}"
-               TargetType="DataGridCell">
+        <Style 
+            x:Key="DataGridResultCell"
+            BasedOn="{StaticResource {x:Type DataGridCell}}"
+            TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="1 1 2 1"/>
             <Setter Property="MaxWidth" Value="75"/>
         </Style>
         
-        <Style x:Key="DataGridFioCell"
-               BasedOn="{StaticResource {x:Type DataGridCell}}"
-               TargetType="DataGridCell">
+        <Style 
+            x:Key="DataGridFioCell"
+            BasedOn="{StaticResource {x:Type DataGridCell}}"
+            TargetType="DataGridCell">
             <Setter Property="MaxWidth" Value="325"/>
         </Style>
         
-        <Style x:Key="DataGridGroupCell"
-               BasedOn="{StaticResource {x:Type DataGridCell}}"
-               TargetType="DataGridCell">
+        <Style 
+            x:Key="DataGridGroupCell"
+            BasedOn="{StaticResource {x:Type DataGridCell}}"
+            TargetType="DataGridCell">
             <Setter Property="MaxWidth" Value="100"/>
         </Style>
 
-        <Style x:Key="DataGridSubCell"
-               BasedOn="{StaticResource {x:Type DataGridCell}}"
-               TargetType="DataGridCell">
+        <Style 
+            x:Key="DataGridSubCell"
+            BasedOn="{StaticResource {x:Type DataGridCell}}"
+            TargetType="DataGridCell">
             <Setter Property="MaxWidth" Value="50"/>
         </Style>
         
     </Window.Resources>
-    
+
     <Window.CommandBindings>
-        
         <CommandBinding 
             Command="SystemCommands.CloseWindowCommand"
             Executed="OnCloseWindowCommandExecuted"/>
-        
         <CommandBinding 
             Command="commands:TableCommands.AddColumn"
             Executed="OnAddColumnCommandExecuted"/>
-        
         <CommandBinding 
             Command="commands:TableCommands.MakeRating"
             Executed="OnMakeRatingCommandExecuted"/>
-        
         <CommandBinding 
             Command="Paste"            
             Executed="OnPasteCommandExecuted"/>
-        
         <CommandBinding 
             Command="Save"            
             Executed="OnSaveCommandExecuted"/>
-        
         <CommandBinding 
             Command="New"                        
             Executed="OnNewProjectCommandExecuted"/>
-        
         <CommandBinding 
             Command="Open"
             Executed="OnOpenProjectCommandExecuted"/>
-
         <CommandBinding
             Command="Help"
             Executed="OnHelpCommandExecuted"/>
-        
     </Window.CommandBindings>
-    
-    <Grid 
-        Name="mainGrid">
-        
-		<Grid.RowDefinitions>
-			<RowDefinition 
-                Height="auto"/>      <!--Menu grid-->
-			<RowDefinition 
-                Height="*"/>         <!--Table grid-->
+
+    <Grid Name="mainGrid">
+        <Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>      <!--Menu grid-->
+			<RowDefinition Height="*"/>         <!--Table grid-->
 		</Grid.RowDefinitions>
 
         <Menu 
-            Name="menu"
+            Name="menu" 
             Style="{StaticResource Menu}">
-            
-            <MenuItem 
-                Header="Файл">
-                
+            <MenuItem Header="Файл">
                 <MenuItem 
-                    Header="Новый проект"
-                    Command="New"/>
-                
+                    Header="Новый проект" 
+                    Command="New"/>                
                 <MenuItem 
-                    Header="Открыть"
-                    Command="Open"/>
-                
+                    Header="Открыть" 
+                    Command="Open"/>                
                 <MenuItem 
-                    Header="Сохранить"
-                    Command="Save"/>
-                
+                    Header="Сохранить" 
+                    Command="Save"/>                
                 <Separator/>
-                
                 <MenuItem 
-                    Header="Закрыть"
+                    Header="Закрыть" 
                     Command="SystemCommands.CloseWindowCommand"/>
-                
             </MenuItem>
 
-            <MenuItem 
-                Header="Правка">
-                
+            <MenuItem Header="Правка">
                 <MenuItem 
                     Header="Копировать"
-                    Command="Copy"/>
-                
+                    Command="Copy"/>                
                 <MenuItem 
                     Header="Вставить"
                     Command="Paste"
-                    CommandTarget="{Binding tableBody}"/>
-                
+                    CommandTarget="{Binding tableBody}"/>                
                 <MenuItem 
                     Header="Выделить все" 
-                    Command="SelectAll"/>
-                
+                    Command="SelectAll"/>                
             </MenuItem>
 
-            <MenuItem 
-                Header="Вставка">
-                
-                <MenuItem 
-                    Command="commands:TableCommands.AddColumn"/>
-                
-                <MenuItem 
-                    Header="Режим добавления">
-                    
+            <MenuItem Header="Вставка">
+                <MenuItem Command="commands:TableCommands.AddColumn"/>
+                <MenuItem Header="Режим добавления">
                     <MenuItem 
                         Header="Не учитывать столбец 'Место'"
                         Click="OnAddModeItemClick" 
                         IsCheckable="True"
                         IsChecked="True"/>
-                    
                     <MenuItem 
                         Header="Учитывать столбец 'Место'"
                         Click="OnAddModeItemClick"
                         IsCheckable="True"/>
-                    
                 </MenuItem>
-                
             </MenuItem>
-
-            <MenuItem 
-                Header="Рейтинг">
-                
-                <MenuItem 
-                    Command="commands:TableCommands.MakeRating"/>
-                
+            <MenuItem Header="Рейтинг">
+                <MenuItem Command="commands:TableCommands.MakeRating"/>
             </MenuItem>
-            
             <MenuItem 
                 Header="Справка" 
                 Command="Help"/>
@@ -359,12 +303,9 @@
         <Grid 
             Name="table" 
             Style="{StaticResource Table}">
-            
             <Grid.RowDefinitions>
-                <RowDefinition 
-                    Height="0.3*"/>
-                <RowDefinition 
-                    Height="*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <ScrollViewer 
@@ -376,32 +317,22 @@
                     Style="{StaticResource TableHeader}">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition 
-                            Width="325"/>
-                        <ColumnDefinition 
-                            Width="100"/>
-                        <ColumnDefinition 
-                            Width="75"/>
+                        <ColumnDefinition Width="325"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="75"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition 
-                            Height="*"/>
-                        <RowDefinition 
-                            Height="0.7*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.7*"/>
                     </Grid.RowDefinitions>
-
                 </Grid>
-                
             </ScrollViewer>
 
             <DataGrid 
                 Name="tableBody"
                 Style="{StaticResource TableBody}"
                 InitializingNewItem="OnTableBodyInitNewItem"/>
-            
-        </Grid>
-        
-    </Grid>
-    
+        </Grid>        
+    </Grid>    
 </Window>
