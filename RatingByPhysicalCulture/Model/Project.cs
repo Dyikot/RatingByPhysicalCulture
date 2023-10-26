@@ -57,9 +57,13 @@ namespace RatingByPhysicalCulture.Model
 
 			if (openFileDialog.ShowDialog() != true &&
 				openFileDialog.FileName != "ProjectsList")
+			{
 				return null;
+			}
 			else
+			{
 				return openFileDialog.FileName;
+			}
 		} 
 
 		public void OnPropertyChanged([CallerMemberName] string prop = "")

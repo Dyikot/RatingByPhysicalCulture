@@ -14,35 +14,39 @@ namespace RatingByPhysicalCulture.Commands
 	public static class TableCommands
 	{
 		public static readonly RoutedUICommand AddColumn =
-			new (
+			new RoutedUICommand(
 				text: "Добавить Столбец",
 				name: "AddColumn",
 				ownerType: typeof(TableCommands),
 				inputGestures: new InputGestureCollection()
 				{
 					new KeyGesture(Key.A, ModifierKeys.Alt)
-				});
+				}
+				);
 
 		public static readonly RoutedUICommand RenameColumn =
-			new (
+			new RoutedUICommand(
 				text: "Переименовать",
 				name: "RenameColumn",
-				ownerType: typeof(TableCommands));
+				ownerType: typeof(TableCommands)
+				);
 
 		public static readonly RoutedUICommand RemoveColumn =
-			new (
+			new RoutedUICommand(
 				text: "Удалить",
 				name: "RemoveColumn",
-				ownerType: typeof(TableCommands));
+				ownerType: typeof(TableCommands)
+				);
 
 		public static readonly RoutedUICommand MakeRating =
-			new (
+			new RoutedUICommand(
 				text: "Составить",
 				name: "MakeRating",
 				ownerType: typeof(TableCommands),
 				inputGestures: new InputGestureCollection()
 				{
 					new KeyGesture(Key.F5)
-				});
+				}
+				);
 	}
 }

@@ -64,18 +64,19 @@ namespace RatingByPhysicalCulture.ViewModel
 			};
 
 			// Добавление разметки столбцов в Header
-			int lastResultColumnsIndex = ColumnsAmount
-										 - NumberOfMainColumnsBehindResultColumns;
+			int lastResultColumnsIndex = 
+				ColumnsAmount - NumberOfMainColumnsBehindResultColumns;
+
 			for (int i = 0; i < SubColumnsText.Length; i++)
 			{
 				_header.ColumnDefinitions.Insert(
 					lastResultColumnsIndex + i,
 					new ColumnDefinition()
 					{
-						Style = Application
-									.Current
-									.MainWindow
-									.FindResource("SubColumnLayout") as Style
+						Style = 
+							Application.Current
+									   .MainWindow
+									   .FindResource("SubColumnLayout") as Style
 					});
 			}
 
@@ -97,12 +98,12 @@ namespace RatingByPhysicalCulture.ViewModel
 				};
 				removeBinding.Executed += OnRemoveColumnCommandExecuted;
 
-				ContextMenu contextMenu = new()
+				var contextMenu = new ContextMenu()
 				{
-					Style = Application
-								.Current
-								.MainWindow
-								.FindResource("ColumnHeaderContextMenu") as Style
+					Style =
+						Application.Current
+								   .MainWindow
+								   .FindResource("ColumnHeaderContextMenu") as Style
 				};
 
 				contextMenu.CommandBindings.AddRange(new CommandBinding[]
@@ -129,16 +130,16 @@ namespace RatingByPhysicalCulture.ViewModel
 			{
 				Child = new TextBlock()
 				{
-					Style = Application
-								.Current
-								.MainWindow
-								.FindResource("ResultColumnHeaderContent") as Style,
+					Style =
+						Application.Current
+								   .MainWindow
+								   .FindResource("ResultColumnHeaderContent") as Style,
 					Text = name
 				},
-				Style = Application
-							.Current
-							.MainWindow
-							.FindResource("ResultColumnHeader") as Style,
+				Style = 
+					Application.Current
+							   .MainWindow
+							   .FindResource("ResultColumnHeader") as Style,
 				ContextMenu = CreateColumnContextMenu()
 			};
 
@@ -160,15 +161,15 @@ namespace RatingByPhysicalCulture.ViewModel
 					Content = new TextBlock()
 					{
 						Text = SubColumnsText[i],
-						Style = Application
-									.Current
-									.MainWindow
-									.FindResource("SubColumnContent") as Style
+						Style = 
+							Application.Current
+									   .MainWindow
+									   .FindResource("SubColumnContent") as Style
 					},
-					Style = Application
-								.Current
-								.MainWindow
-								.FindResource("SubColumn") as Style
+					Style = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("SubColumn") as Style
 				};
 
 				// Добавление подсталбцов в Header
@@ -193,14 +194,14 @@ namespace RatingByPhysicalCulture.ViewModel
 					{
 						Converter = new StringToIntConverter()
 					},
-					HeaderStyle = Application
-									.Current
-									.MainWindow
-							 		.FindResource("DataGridSubColumn") as Style,
-					CellStyle = Application
-									.Current
-									.MainWindow
-									.FindResource("DataGridSubCell") as Style
+					HeaderStyle = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubColumn") as Style,
+					CellStyle = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubCell") as Style
 				});
 
 			_body.Columns.Insert(
@@ -212,14 +213,14 @@ namespace RatingByPhysicalCulture.ViewModel
 						StringFormat = "m:s",
 						Converter = new StringToDateTimeConverter()
 					},
-					HeaderStyle = Application
-									.Current
-									.MainWindow
-									.FindResource("DataGridSubColumn") as Style,
-					CellStyle = Application
-									.Current
-									.MainWindow
-									.FindResource("DataGridSubCell") as Style
+					HeaderStyle = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubColumn") as Style,
+					CellStyle = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubCell") as Style
 				});
 
 			_body.Columns.Insert(
@@ -227,14 +228,14 @@ namespace RatingByPhysicalCulture.ViewModel
 				new DataGridTextColumn()
 				{
 					Binding = new Binding($"Results[{lastResultColumnIndex}].Rating"),
-					HeaderStyle = Application
-									.Current
-									.MainWindow
-									.FindResource("DataGridSubColumn") as Style,
-					CellStyle = Application
-									.Current
-									.MainWindow
-									.FindResource("DataGridSubCell") as Style,
+					HeaderStyle =
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubColumn") as Style,
+					CellStyle = 
+						Application.Current
+								   .MainWindow
+								   .FindResource("DataGridSubCell") as Style,
 					IsReadOnly = true
 				});
 
@@ -260,10 +261,10 @@ namespace RatingByPhysicalCulture.ViewModel
 			{
 				students.Sort((left, right) =>
 				{
-					bool isLeftNull = left.Results[i].Value is null ||
-									  left.Results[i].Time is null;
-					bool isRightNull = right.Results[i].Value is null || 
-									   right.Results[i].Time is null;
+					bool isLeftNull = 
+						left.Results[i].Value is null || left.Results[i].Time is null;
+					bool isRightNull = 
+						right.Results[i].Value is null || right.Results[i].Time is null;
 
 					if (isLeftNull && isRightNull)
 					{
@@ -278,10 +279,13 @@ namespace RatingByPhysicalCulture.ViewModel
 						return 1;
 					}
 
-					double leftTime = left.Results[i].Time.Value.Minute
-								   + left.Results[i].Time.Value.Second / 60.0;
-					double rightTime = right.Results[i].Time.Value.Minute
-					               + right.Results[i].Time.Value.Minute / 60.0;
+					double leftTime =
+						  left.Results[i].Time.Value.Minute
+						+ left.Results[i].Time.Value.Second / 60.0;
+					double rightTime = 
+						  right.Results[i].Time.Value.Minute
+					    + right.Results[i].Time.Value.Minute / 60.0;
+
 					double leftAvg = (double)(left.Results[i].Value / leftTime);
 					double rightAvg = (double)(right.Results[i].Value / rightTime);
 
@@ -398,10 +402,11 @@ namespace RatingByPhysicalCulture.ViewModel
 			var projectInfo = ProjectInfo.GetInstance;
 
 			// Сериализация данных таблицы
-			XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Student>));
-			using (var fileStream = new FileStream(
-											projectInfo.ProjectPath,
-											FileMode.Create))
+			var xmlSerializer = new XmlSerializer(typeof(List<Student>));
+			using (var fileStream =
+				new FileStream(
+					projectInfo.ProjectPath,
+					FileMode.Create))
 			{
 				xmlSerializer.Serialize(fileStream, Students.ToList());
 			}
@@ -428,16 +433,20 @@ namespace RatingByPhysicalCulture.ViewModel
 			}
 
 			// Преобразование данных Clipboard в табличный вид
-			var rawRows = clipbordData.Split(
-							separator: new string[] { "\r\n" },
-							StringSplitOptions.RemoveEmptyEntries);
+			var rawRows = 
+				clipbordData.Split(
+					separator: new string[] { "\r\n" },
+					StringSplitOptions.RemoveEmptyEntries);
+
 			var rows = new List<List<string>>();
 			foreach (string row in rawRows)
 			{
 				rows.Add(new List<string>());
-				rows.Last().AddRange(row.Split(
-					separator: new string[] { "\t" },
-					options: StringSplitOptions.None));
+				rows.Last()
+					.AddRange(
+						row.Split(
+							separator: new string[] { "\t" },
+							options: StringSplitOptions.None));
 			}
 
 			// Добавление данных в таблицу
@@ -451,15 +460,18 @@ namespace RatingByPhysicalCulture.ViewModel
 			{
 				return pasteMode switch
 				{
-					PasteMode.WithoutRating => column is Column.Time ?
-											   Column.Value :
-											   column + 1,
-					PasteMode.WithRating => column is Column.Rating ?
-											Column.Value :
-											column + 1,
+					PasteMode.WithoutRating => 
+						column is Column.Time ?
+						Column.Value :
+						column + 1,
+					PasteMode.WithRating => 
+						column is Column.Rating ?
+						Column.Value :
+						column + 1,
 					_ => column,
 				};
 			}
+
 			Column GetFirstColumn(List<string> row)
 			{
 				// Определяется индекс первой не пустой клетки
@@ -500,6 +512,7 @@ namespace RatingByPhysicalCulture.ViewModel
 			{
 				column = firstColumn = GetFirstColumn(row);
 				student = new Student();
+
 				for (int i = notEmptyCellIndex;
 					 i < row.Count &&
 					 i < GetColumnsForAddAmount(pasteMode)
@@ -533,11 +546,11 @@ namespace RatingByPhysicalCulture.ViewModel
 
 						case Column.Time:
 							if (DateTime.TryParseExact(
-										s: row[i],
-										format: "m:s",
-										provider: CultureInfo.InvariantCulture,
-										style: DateTimeStyles.None,
-										result: out var resultTime))
+									s: row[i],
+									format: "m:s",
+									provider: CultureInfo.InvariantCulture,
+									style: DateTimeStyles.None,
+									result: out var resultTime))
 							{
 								if(student.Results.Count == 0)
 								{
@@ -569,9 +582,8 @@ namespace RatingByPhysicalCulture.ViewModel
 
 		private void OnRenameColumnCommandExecuted(object sender, ExecutedRoutedEventArgs e)
 		{
-			var columnName = InputBox.Show(
-									"Введите название столбца:",
-									"Изменение столбца");
+			var columnName = 
+				InputBox.Show("Введите название столбца:", "Изменение столбца");
 			if (columnName is not null)
 			{
 				var contextMenu = sender as ContextMenu;
@@ -588,7 +600,8 @@ namespace RatingByPhysicalCulture.ViewModel
 				const int SubColumnsAmount = 3;
 				const int ResultColumnPartsAmount = SubColumnsAmount + 1; // + ResultColumnHeader
 				int columnIndexInColumnDefenition = Grid.GetColumn(columnsHeader);
-				int columnIndexInChildren = FirstResultColumnsIndex
+				int columnIndexInChildren = 
+					  FirstResultColumnsIndex
 					+ (columnIndexInColumnDefenition / SubColumnsAmount)
 					* ResultColumnPartsAmount;
 
@@ -603,6 +616,7 @@ namespace RatingByPhysicalCulture.ViewModel
 				Border? column;
 				int indexInColumnDefenition = 0;
 				const int ResultColumnRowSpan = 3;
+
 				for (int i = columnIndexInChildren;
 					i <= _header.Children.Count - 1;
 					i += ResultColumnPartsAmount)
@@ -610,9 +624,11 @@ namespace RatingByPhysicalCulture.ViewModel
 					column = _header.Children[i] as Border;
 					Grid.SetColumn(
 						column,
-						columnIndexInColumnDefenition + indexInColumnDefenition
+						columnIndexInColumnDefenition
+							+ indexInColumnDefenition
 							* SubColumnsAmount);
 					Grid.SetColumnSpan(column, ResultColumnRowSpan);
+
 					for (int j = 1; j <= SubColumnsAmount; j++)
 					{
 						subColumn = _header.Children[i + j] as Button;
@@ -697,7 +713,8 @@ namespace RatingByPhysicalCulture.ViewModel
 		}
 		private bool TryDeserializeData()
 		{
-			ProjectInfo projectInfo = ProjectInfo.GetInstance;
+			var projectInfo = ProjectInfo.GetInstance;
+
 			if (!File.Exists(projectInfo.ProjectPath) || 
 				new FileInfo(projectInfo.ProjectPath).Length == 0)
 			{
@@ -706,6 +723,7 @@ namespace RatingByPhysicalCulture.ViewModel
 
 			// Десериализация заголовков столбцов таблицы
 			List<string?> columnHeaderTextCollection = new();
+
 			using (var streamReader = new StreamReader(projectInfo.ColumnsHeaderInfoPath))
 			{
 				for (int i = FirstResultColumnIndexInChildren;
@@ -718,9 +736,9 @@ namespace RatingByPhysicalCulture.ViewModel
 
 			// Десериализация данных таблицы
 			List<Student>? students;
-			using (var fileStream = new FileStream(
-											projectInfo.ProjectPath,
-											FileMode.OpenOrCreate))
+
+			using (var fileStream = 
+				new FileStream(projectInfo.ProjectPath, FileMode.OpenOrCreate))
 			{
 				students = new XmlSerializer(typeof(List<Student>))
 							   .Deserialize(fileStream) as List<Student>;
@@ -741,97 +759,73 @@ namespace RatingByPhysicalCulture.ViewModel
 		private void InitMainColumns()
 		{
 			// Добавление столбцов "ФИО", "Учебная группа" и "Место" в Header
-			Button mainColumn;
+			Button mainColumn = new();
 			const int MainColumnsRow = 0;
 			const int MainColumnsRowSpan = 2;
+
 			const int FioColumnPosition = 0;
 			const int StudyGroupColumnPosition = 1;
 			const int RatingColumnPosition = 5;
 
-			// ФИО
-			mainColumn = new Button()
+			(string style, int position)[] columnsStyleAndPosition = new []
 			{
-				Style = Application
-						.Current
-						.MainWindow
-						.FindResource("MainColumnFio") as Style
+				("MainColumnFio", FioColumnPosition),
+				("MainColumnGroup", StudyGroupColumnPosition),
+				("MainColumnRating", RatingColumnPosition )
 			};
 
-			Grid.SetRow(mainColumn, MainColumnsRow);
-			Grid.SetColumn(mainColumn, FioColumnPosition);
-			Grid.SetRowSpan(mainColumn, MainColumnsRowSpan);
-			_header.Children.Add(mainColumn);
-
-			// Группа
-			mainColumn = new Button()
+			void SetGrid(UIElement uIElement, int rowIndex, int columnIndex, int rowSpan)
 			{
-				Style = Application
-						.Current
-						.MainWindow
-						.FindResource("MainColumnGroup") as Style
-			};
+				Grid.SetRow(uIElement, rowIndex);
+				Grid.SetColumn(uIElement, columnIndex);
+				Grid.SetRowSpan(uIElement, rowSpan);
+			}
 
-			Grid.SetRow(mainColumn, MainColumnsRow);
-			Grid.SetColumn(mainColumn, StudyGroupColumnPosition);
-			Grid.SetRowSpan(mainColumn, MainColumnsRowSpan);
-			_header.Children.Add(mainColumn);
+            foreach (var columnStyleAndPosition in columnsStyleAndPosition)
+            {
+				mainColumn = new Button()
+				{
+					Style =
+					Application.Current
+							   .MainWindow
+							   .FindResource(columnStyleAndPosition.style) as Style
+				};
 
-			// Место
-			mainColumn = new Button()
-			{
-				Style = Application
-						.Current
-						.MainWindow
-						.FindResource("MainColumnRating") as Style
-			};
+				SetGrid(
+					mainColumn,
+					MainColumnsRow,
+					columnStyleAndPosition.position,
+					MainColumnsRowSpan);
 
-			Grid.SetRow(mainColumn, MainColumnsRow);
-			Grid.SetColumn(mainColumn, RatingColumnPosition);
-			Grid.SetRowSpan(mainColumn, MainColumnsRowSpan);
-			_header.Children.Add(mainColumn);
+				_header.Children.Add(mainColumn);
+			}
 
 			_ratingColumn = mainColumn;
 
-			// Добавление столбцов в Body
-			_body.Columns.Add(new DataGridTextColumn()
+			(string title, string type, string cell, bool isReadOnly)[] columnsProperties =
+				new[]
 			{
-				Binding = new Binding("Name"),
-				HeaderStyle = Application
-								.Current
-								.MainWindow
-								.FindResource("FioColumn") as Style,
-				CellStyle = Application
-							.Current
-							.MainWindow
-							.FindResource("DataGridFioCell") as Style
-			});
+				("Name", "FioColumn", "DataGridFioCell", false),
+				("Group", "GroupColumn", "DataGridGroupCell", false),
+				("Rating", "ResultColumn", "DataGridResultCell", true)
+			};
 
-			_body.Columns.Add(new DataGridTextColumn()
-			{
-				Binding = new Binding("Group"),
-				HeaderStyle = Application
-								.Current
-								.MainWindow
-								.FindResource("GroupColumn") as Style,
-				CellStyle = Application
-							.Current
-							.MainWindow
-							.FindResource("DataGridGroupCell") as Style
-			});
-
-			_body.Columns.Add(new DataGridTextColumn()
-			{
-				Binding = new Binding("Rating"),
-				HeaderStyle = Application
-								.Current
-								.MainWindow
-								.FindResource("ResultColumn") as Style,
-				CellStyle = Application
-							.Current
-							.MainWindow
-							.FindResource("DataGridResultCell") as Style,
-				IsReadOnly = true
-			});
+            foreach (var columnProperties in columnsProperties)
+            {
+				_body.Columns.Add(new DataGridTextColumn()
+				{
+					Binding = new Binding(columnProperties.title),
+					HeaderStyle =
+						Application.Current
+								   .MainWindow
+								   .FindResource(columnProperties.type) as Style,
+					CellStyle =
+						Application.Current
+								   .MainWindow
+								   .FindResource(columnProperties.cell) as Style,
+					IsReadOnly = columnProperties.isReadOnly
+				});
+			}
 		}
 	}
 }

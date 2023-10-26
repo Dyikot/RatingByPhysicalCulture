@@ -42,7 +42,8 @@ namespace RatingByPhysicalCulture.Converters
 					format:"m:s",
 					provider: CultureInfo.InvariantCulture,
 					style: DateTimeStyles.None,
-					result: out DateTime dateValue))
+					result: out DateTime dateValue
+					))
 			{
 				return dateValue;
 			}

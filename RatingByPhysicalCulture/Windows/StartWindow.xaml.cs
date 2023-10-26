@@ -50,15 +50,19 @@ namespace RatingByPhysicalCulture.Windows
 		private void OnOpenProjectButtonClick(object sender, RoutedEventArgs e)
 		{
 			var filePath = Project.GetProjectPathInDialog();
+
 			if (filePath is not null)
 			{
 				OpenProject(filePath);
 			}
 				
 		}
-		private void OnProjectListDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void OnProjectListDoubleClick(
+			object sender,
+			System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var project = ((ListBoxItem)sender).Content as Project;
+
 			if (File.Exists(project?.Path))
 			{
 				_projectListModel.UpdateTime(project);
@@ -101,8 +105,9 @@ namespace RatingByPhysicalCulture.Windows
 
 				if (saveFileDialog.ShowDialog() is true)
 				{
-                    _projectName.Text = Path.GetFileNameWithoutExtension(
-											saveFileDialog.SafeFileName);
+                    _projectName.Text = 
+						Path.GetFileNameWithoutExtension(saveFileDialog.SafeFileName);
+
 					return Path.GetDirectoryName(saveFileDialog.FileName);
 				}
 				else
@@ -112,6 +117,7 @@ namespace RatingByPhysicalCulture.Windows
 			};
 
 			var path = GetNewProjectPath();
+
 			if (path is not null)
 			{
 				_projectPath.Text = path;
@@ -132,66 +138,66 @@ namespace RatingByPhysicalCulture.Windows
 			if (!Path.IsPathRooted(_projectPath.Text))
 			{
 				HighlightTextBox(_projectPath);
+				return;
 			}
-			else
+
+			bool replaceProject = false;
+			var directoryPath = $"{_projectPath.Text}\\{_projectName.Text}";
+
+			if (Directory.Exists(directoryPath))
 			{
-				bool replaceProject = false;
-				var directoryPath = $"{_projectPath.Text}\\{_projectName.Text}";
-
-				if (Directory.Exists(directoryPath))
+				if (MessageBox.Show(
+						"Проект с таким именем уже существует. Заменить на новый?",
+						"Создание проекта",
+						MessageBoxButton.YesNo,
+						MessageBoxImage.Question) == MessageBoxResult.Yes)
 				{
-					if (MessageBox.Show(
-							"Проект с таким именем уже существует. Заменить на новый?",
-							"Создание проекта",
-							MessageBoxButton.YesNo,
-							MessageBoxImage.Question) == MessageBoxResult.Yes)
-					{
-						replaceProject = true;
-					}
-					else
-					{
-						return;
-					}
+					replaceProject = true;
 				}
-
-				var projectPath = $"{directoryPath}\\{_projectName.Text}.xml";
-
-				ProjectInfo CreateProject(string projectPath)
+				else
 				{
-					ProjectInfo projectInfo = ProjectInfo.GetInstance;
-					projectInfo.ProjectPath = projectPath;
-
-					Directory.CreateDirectory(projectInfo.ProjectDirectory);
-					using (var fileStream = File.Create(projectInfo.ProjectPath)){ }
-					using (var fileStream = File.Create(projectInfo.ColumnsHeaderInfoPath)){ }
-
-					return projectInfo;
+					return;
 				}
-				void AddProject(ProjectInfo projectInfo)
-				{
-					if (replaceProject)
-					{
-						_projectListModel.RemoveProject(project =>
-											project.Path ==
-											ProjectInfo.GetInstance.ProjectPath);
-					}
-
-					_projectListModel.AddProject(new Project()
-					{
-						Name = projectInfo.ProjectName,
-						Path = projectInfo.ProjectPath,
-						TimeOpened = new FileInfo(
-											projectInfo.ProjectPath)
-											.LastAccessTime
-											.ToString(Project.TimeFortmat)
-					});
-
-					_projectListModel.SerializeProjects();
-				}
-
-				AddProject(CreateProject(projectPath));
-				OpenProject(projectPath);
 			}
+
+			var projectPath = $"{directoryPath}\\{_projectName.Text}.xml";
+
+			ProjectInfo CreateProject(string projectPath)
+			{
+				ProjectInfo projectInfo = ProjectInfo.GetInstance;
+				projectInfo.ProjectPath = projectPath;
+
+				Directory.CreateDirectory(projectInfo.ProjectDirectory);
+				using (var fileStream = File.Create(projectInfo.ProjectPath))
+				{ }
+				using (var fileStream = File.Create(projectInfo.ColumnsHeaderInfoPath))
+				{ }
+
+				return projectInfo;
+			}
+
+			void AddProject(ProjectInfo projectInfo)
+			{
+				if (replaceProject)
+				{
+					_projectListModel.RemoveProject(project =>
+						project.Path == ProjectInfo.GetInstance.ProjectPath);
+				}
+
+				_projectListModel.AddProject(new Project()
+				{
+					Name = projectInfo.ProjectName,
+					Path = projectInfo.ProjectPath,
+					TimeOpened =
+						new FileInfo(projectInfo.ProjectPath).LastAccessTime
+															 .ToString(Project.TimeFortmat)
+				});
+
+				_projectListModel.SerializeProjects();
+			}
+
+			AddProject(CreateProject(projectPath));
+			OpenProject(projectPath);
 		}
 		private void OnProjectPathInitialized(object sender, EventArgs e)
 		{
@@ -202,6 +208,7 @@ namespace RatingByPhysicalCulture.Windows
 		{
 			ProjectInfo.GetInstance.ProjectPath = filePath;
 			Application.Current.MainWindow = new MainWindow();
+
 			foreach (Window window in Application.Current.Windows)
 			{
 				if (window != Application.Current.MainWindow &&

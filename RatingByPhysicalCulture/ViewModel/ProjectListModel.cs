@@ -44,13 +44,15 @@ namespace RatingByPhysicalCulture.ViewModel
 		public void SerializeProjects()
 		{
 			using (var fileStream = new FileStream(
-											ProjectInfo.GetInstance.ProjectsList,
-											FileMode.Create))
+				ProjectInfo.GetInstance.ProjectsList,
+				FileMode.Create
+				))
 			{
 
 				new XmlSerializer(typeof(List<Project>)).Serialize(
-															fileStream,
-															Projects.ToList());
+					fileStream,
+					Projects.ToList()
+					);
 			}
 		}
 
@@ -68,16 +70,19 @@ namespace RatingByPhysicalCulture.ViewModel
 		private List<Project> DeserializeProjectList()
 		{
 			var projects = new List<Project>();
-			using (var fileStream = new FileStream(ProjectInfo.GetInstance.ProjectsList,
-											FileMode.Open))
+			using (var fileStream = new FileStream(
+				ProjectInfo.GetInstance.ProjectsList,
+				FileMode.Open
+				))
 			{
-				projects = new XmlSerializer(typeof(List<Project>)).Deserialize(fileStream)
-					as List<Project>;
+				projects = new XmlSerializer(typeof(List<Project>))
+					.Deserialize(fileStream) as List<Project>;
 			}
 
 			var sortedProjects = projects
-								 .OrderByDescending(project => project.TimeOpened)
-								 .ToList();
+				.OrderByDescending(project => project.TimeOpened)
+				.ToList();
+
 			return sortedProjects!;
 		}	
 	}

@@ -20,12 +20,13 @@ namespace RatingByPhysicalCulture.Windows
 
 		public MainWindow()
 		{
-			InitializeComponent();			
+			InitializeComponent();
 		}
 
 		private void OnAddModeItemClick(object sender, RoutedEventArgs e)
 		{
 			var mode = (MenuItem)e.Source;
+
 			if (!mode.IsChecked)
 			{
 				mode.IsChecked = true;
@@ -45,6 +46,7 @@ namespace RatingByPhysicalCulture.Windows
 				PasteMode.WithRating => (MenuItem)modeCollection.Items[0],
 				_ => throw new NotImplementedException(),
 			};
+
 			mode.IsChecked = false;
 		}
 		private void OnResultColumnHeaderClick(object sender, RoutedEventArgs e)
@@ -78,9 +80,9 @@ namespace RatingByPhysicalCulture.Windows
 
 		private void OnAddColumnCommandExecuted(object sender, ExecutedRoutedEventArgs e)
 		{
-			var columnName = InputBox.Show(
-									"Введите название столбца:",
-									"Добавление столбца");
+			var columnName =
+				InputBox.Show("Введите название столбца:","Добавление столбца");
+
 			if (columnName is not null)
 			{
 				_tableModel.AddColumn(columnName);
@@ -112,6 +114,7 @@ namespace RatingByPhysicalCulture.Windows
 			}
 
 			var filePath = Project.GetProjectPathInDialog();
+
 			if (filePath is not null)
 			{
 				OpenProject(filePath);
@@ -132,6 +135,7 @@ namespace RatingByPhysicalCulture.Windows
 				typeof(DataGrid).GetMethod("PerformSort",
 					System.Reflection.BindingFlags.Instance |
 					System.Reflection.BindingFlags.NonPublic);
+
 			performSort?.Invoke(dataGrid, new[] { dataGrid.Columns[columnIndex] });
 		}
 	}
